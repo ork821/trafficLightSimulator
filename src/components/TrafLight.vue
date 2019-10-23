@@ -4,16 +4,19 @@
                 :color="'red'"
                 :isActive="redIsActive"
                 :time="redIsActive ? time : null"
+                :isBlink="redIsActive ? isBlink : null"
         />
         <Light
                 :color="'yellow'"
                 :isActive="yellowIsActive"
                 :time="yellowIsActive ? time : null"
+                :isBlink="yellowIsActive ? isBlink : null"
         />
         <Light
                 :color="'green'"
                 :isActive="greenIsActive"
                 :time="greenIsActive ? time : null"
+                :isBlink="greenIsActive ? isBlink : null"
         />
     </div>
 </template>
@@ -33,7 +36,8 @@
                 time: 10,
                 redIsActive: true,
                 yellowIsActive: false,
-                greenIsActive: false
+                greenIsActive: false,
+                isBlink: false
             };
         },
         props: {
@@ -53,6 +57,7 @@
         },
         watch: {
             '$route': function () {
+                this.isBlink = false
                 this.prevLight = this.currentLight;
                 this.currentLight = this.id;
                 this.time = this.startTime;
@@ -72,6 +77,7 @@
                         this.redIsActive = false
                         this.yellowIsActive = true
                         this.greenIsActive = false
+                        this.isBlink = true
                         break
                     case 3:
                         this.redIsActive = false
@@ -116,6 +122,9 @@
                 } else {
                     clearInterval(this.timer)
                     this.changeLight()
+                }
+                if (this.time <= 3) {
+                    this.isBlink = true
                 }
             }
 

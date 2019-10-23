@@ -1,6 +1,6 @@
 <template>
     <div v-bind:class="color" class="light">
-        <div v-bind:class="{active: isActive}" class="light-layer"></div>
+        <div v-bind:class="{active: isActive, blink: isBlink}" class="light-layer"></div>
         <span v-if="isActive" class="timer">
             {{ time }}
         </span>
@@ -17,9 +17,13 @@
             isActive: {
                 type: Boolean
             },
+            isBlink: {
+                type: Boolean
+            },
             time: {
                 type: Number
-            }
+            },
+
         }
     }
 </script>
@@ -32,6 +36,19 @@
         border-radius: 50px;
         position: relative;
     }
+
+    .blink {
+        animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+        0% { opacity: 0.7 }
+        25% { opacity: 0.1 }
+        50% { opacity: 0.7 }
+        75% { opacity: 0.1 }
+        100% { opacity: 0.7 }
+    }
+
 
     .red {
         color: red;
